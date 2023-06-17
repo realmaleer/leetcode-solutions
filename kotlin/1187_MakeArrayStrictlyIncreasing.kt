@@ -1,25 +1,26 @@
 class Solution {
     fun makeArrayIncreasing(arr1: IntArray, arr2: IntArray): Int {
         val sortedArr2 = arr2.sorted()
-        var combinations = mutableListOf<Triple<Int, Int, Int>>() // first: number of operations; second: last element in the temporary list; third: next unused index of arr2
-            .apply {
-                if (sortedArr2.first() < arr1.first()) {
+        var combinations =
+            mutableListOf<Triple<Int, Int, Int>>() // first: number of operations; second: last element in the temporary list; third: next unUsed index of arr2
+                .apply {
+                    if (sortedArr2.first() < arr1.first()) {
+                        add(
+                            Triple(
+                                1,
+                                sortedArr2.first(),
+                                1
+                            )
+                        )
+                    }
                     add(
                         Triple(
-                            1,
-                            sortedArr2.first(),
-                            1
+                            0,
+                            arr1.first(),
+                            0
                         )
                     )
                 }
-                add(
-                    Triple(
-                        0,
-                        arr1.first(),
-                        0
-                    )
-                )
-            }
 
         for (i in 1 until arr1.size) {
             val newCombinations = mutableListOf<Triple<Int, Int, Int>>().apply {
@@ -57,7 +58,7 @@ class Solution {
             it.first
         }.minOrNull()?.let {
             return it
-        }?: return -1
+        } ?: return -1
     }
 
     private fun getNextReplacingIndexOfArr2(
@@ -83,7 +84,7 @@ class Solution {
             }.minOrNull()
             val maxNumberOfNextIndex = it.value.map { combination ->
                 combination.third
-            }.maxOrNull()?:it.value.first().third
+            }.maxOrNull() ?: it.value.first().third
             minimumNumberOfOperations?.let { numberOfOperation ->
                 Triple(
                     numberOfOperation,
